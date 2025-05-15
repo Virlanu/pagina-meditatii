@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meditatii Matematica & Informatica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1>Meditatii Matematica & Informatica</h1>
+      <p class="intro">
+        Sunt student la Politehnica București, pasionat de informatică și ofer meditații pentru clasele 5-8 și 9-12.<br />
+        Predau C++, pregătire pentru atestate și testul de echivalare.<br />
+        Am terminat liceul teoretic Mihail Sadoveanu și sunt în anul al doilea la Facultatea de Inginerie Electrică.
+      </p>
+    </div>
+  </header>
+
+  <section class="variants container">
+    <h2>Variante de meditații</h2>
+    <div class="buttons-group">
+      <button disabled>Clasele 5-8: Matematică</button>
+      <button disabled>Clasele 5-8: Informatică (C++)</button>
+      <button disabled>Clasele 9-12: Matematică</button>
+      <button disabled>Clasele 9-12: Informatică (C++, Atestate)</button>
+      <button disabled>Pregătire test echivalare</button>
+    </div>
+  </section>
+
+  <section class="testimonials container">
+    <h2>Ce spun elevii</h2>
+    <div class="testimonial">
+      <p>"Meditatiile mi-au schimbat complet perspectiva asupra matematicii! Profesorul explică clar și cu răbdare."</p>
+      <span>- Ana M.</span>
+    </div>
+    <div class="testimonial">
+      <p>"Pregătirea pentru atestat a fost super eficientă, am luat nota 9.5 datorită acestor meditații."</p>
+      <span>- Vlad T.</span>
+    </div>
+    <div class="testimonial">
+      <p>"Recomand tuturor care vor să înțeleagă cu adevărat informatica, profesorul are multă răbdare."</p>
+      <span>- Ioana S.</span>
+    </div>
+  </section>
+
+  <section class="faq container">
+    <h2>Întrebări frecvente (FAQ)</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Ce materiale primesc la meditații?
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="faq-answer" hidden>
+        <p>Primești notițe personalizate, exerciții și teme pentru consolidarea cunoștințelor.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Cât durează o ședință de meditații?
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="faq-answer" hidden>
+        <p>O ședință standard durează între 60 și 90 de minute, în funcție de necesități.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Pot să cer ore online?
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="faq-answer" hidden>
+        <p>Da, ofer meditații atât online, cât și fizic, în funcție de preferințele elevului.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact container">
+    <h2>Contactează-mă</h2>
+    <form action="https://formspree.io/f/xnndlele" method="POST" onsubmit="handleSubmit(event)">
+      <label for="name">Nume complet:</label>
+      <input type="text" id="name" name="name" placeholder="Ex: Ion Popescu" required />
+
+      <label for="email">Adresa de email:</label>
+      <input type="email" id="email" name="email" placeholder="exemplu@mail.com" required />
+
+      <label for="message">Mesaj (ex: clasa, materii, disponibilitate):</label>
+      <textarea id="message" name="message" rows="5" placeholder="Scrie aici detalii..." required></textarea>
+
+      <button type="submit" class="submit-btn">Trimite cererea</button>
+    </form>
+  </section>
+
+  <script>
+    // Toggle FAQ answers
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', !expanded);
+        const answer = button.nextElementSibling;
+        if (answer.hasAttribute('hidden')) {
+          answer.removeAttribute('hidden');
+          button.querySelector('.arrow').style.transform = 'rotate(90deg)';
+        } else {
+          answer.setAttribute('hidden', '');
+          button.querySelector('.arrow').style.transform = 'rotate(0deg)';
+        }
+      });
+    });
+
+    // Form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      fetch(form.action, {
+        method: form.method,
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = 'multumesc.html';
+        } else {
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              alert(data["errors"].map(error => error["message"]).join(", "));
+            } else {
+              alert("A apărut o eroare la trimitere.");
+            }
+          });
+        }
+      }).catch(() => {
+        alert("Eroare la trimiterea formularului.");
+      });
+    }
+  </script>
+</body>
+</html>
